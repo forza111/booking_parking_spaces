@@ -9,7 +9,11 @@ class ParkingPlaces(models.Model):
 
 
 class Bookings(models.Model):
-    parking_number = models.CharField("Номер парковочного места", max_length=20, primary_key=True)
+    park_num = models.ForeignKey(ParkingPlaces, on_delete=models.CASCADE, verbose_name="Номер парковочного места")
+    start_date = models.DateTimeField("Дата начала бронирования")
+    end_date = models.DateTimeField("Дата окончания бронирования")
+    hours = models.PositiveSmallIntegerField("Количество часов")
+
 
     def __str__(self):
         return self.parking_number
