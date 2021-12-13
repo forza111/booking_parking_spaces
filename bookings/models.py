@@ -9,6 +9,7 @@ class ParkingPlaces(models.Model):
 
 
 class Bookings(models.Model):
+    user_id = models.ForeignKey(User, on_delete=models.CASCADE, verbose_name="Пользователь")
     park_num = models.ForeignKey(ParkingPlaces, on_delete=models.CASCADE, verbose_name="Номер парковочного места")
     start_date = models.DateTimeField("Дата начала бронирования")
     end_date = models.DateTimeField("Дата окончания бронирования")

@@ -1,0 +1,26 @@
+<nav class="navbar navbar-expand-lg navbar-light bg-light">
+  <button class="navbar-toggler" type="button" data-toggle="collapse" data-target="#navbarSupportedContent" aria-controls="navbarSupportedContent" aria-expanded="false" aria-label="Toggle navigation">
+    <span class="navbar-toggler-icon"></span>
+  </button>
+  <div class="collapse navbar-collapse" id="navbarSupportedContent">
+    <ul class="navbar-nav my-2 my-lg-0">
+      <li>{% if user.is_authenticated %}
+      <li class="nav-item">
+      <a class="nav-link">{{user.username}}</a>
+      </li>
+          <a class="nav-link" a href="{% url 'accounts/logout' %}">
+        Выход<span class="sr-only"></span></a>
+      </li>
+        {% else %}
+      <li class="nav-item active">
+        <a class="nav-link" a href="">
+          Вход <span class="sr-only"></span></a>
+      </li>
+      <li class="nav-item active">
+        <a class="nav-link" a href="">
+          Регистрация <span class="sr-only"></span></a>
+      {% endif %}
+    </ul>
+    </li>
+  </div>
+</nav>
