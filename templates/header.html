@@ -8,17 +8,14 @@
       <li class="nav-item">
       <a class="nav-link">{{user.username}}</a>
       </li>
-          <a class="nav-link" a href="{% url 'accounts/logout' %}">
+          <a class="nav-link" a href="{% url 'account_logout' %}">
         Выход<span class="sr-only"></span></a>
       </li>
         {% else %}
       <li class="nav-item active">
-        <a class="nav-link" a href="">
+        <a class="nav-link" a href="{% url 'account_login' %}">
           Вход <span class="sr-only"></span></a>
       </li>
-      <li class="nav-item active">
-        <a class="nav-link" a href="">
-          Регистрация <span class="sr-only"></span></a>
       {% endif %}
     </ul>
     </li>
