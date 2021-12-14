@@ -1,0 +1,15 @@
+{% extends 'base.html' %}
+{% block content %}
+
+<div class="features">
+    <h1>Рарезервировать место</h1>
+    <form method="post">
+        {% csrf_token %}
+        <input type="date" class="form-control" name="start_date"><br>
+        <input type="time" class="form-control" name="start_date"><br>
+        <input type="number" class="form-control" name="hours"><br>
+        <button class="btn btn-success" type="submit">Зарезервировать</button>
+    </form>
+</div>
+
+{% endblock content %}
