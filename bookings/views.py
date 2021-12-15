@@ -28,7 +28,8 @@ def reserve(request, pk):
     form = BookingsForm()
     data = {
         'form': form,
-        'error': error
+        'error': error,
+        'pk': pk
     }
     return render(request, "bookings/reservation.html", data)
 
