@@ -7,7 +7,6 @@
         {% csrf_token %}
 
         <input type="hidden" class="form-control" name="user_id" value="{{ user.id }}"><br>
-        <input type="text" class="form-control" placeholder="Номер парковочного места" name="park_num"><br>
         <input type="datetime-local" class="form-control" name="start_date"><br>
         <input type="datetime-local" class="form-control" name="end_date"><br>
         <input type="number" class="form-control" placeholder="Количество часов" name="hours"><br>

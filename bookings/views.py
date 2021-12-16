@@ -20,6 +20,8 @@ def reserve(request, pk):
     if request.method == 'POST':
         form = BookingsForm(request.POST)
         if form.is_valid():
+            form.save(commit=False)
+            form.user_id = request.user.id
             form.park_num = pk
             form.save()
         else:

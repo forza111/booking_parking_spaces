@@ -17,4 +17,4 @@ class Bookings(models.Model):
 
 
     def __str__(self):
-        return self.parking_number
+        return self.park_num
