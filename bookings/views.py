@@ -9,10 +9,6 @@ from .models import ParkingPlaces, Bookings
 from .forms import BookingsForm
 
 
-def index(request):
-    return HttpResponse("Hello, world")
-
-
 class ParkingPlacesList(ListView):
     model = ParkingPlaces
 
@@ -63,13 +59,15 @@ class BookingsList(ListView):
 class BookingDelete(DeleteView):
     model = Bookings
     template_name = 'bookings/booking_delete.html'
-    # success_url = reverse_lazy('bookings_list')
 
     def get_success_url(self):
         return reverse_lazy('bookings_list', kwargs={'pk': self.object.park_num})
+
 
 class BookingUpdate(UpdateView):
     model = Bookings
     template_name = 'bookings/booking_update.html'
     fields = ["start_date", "end_date"]
-    # success_url = reverse_lazy('bookings_list')
+
+    def get_success_url(self):
+        return reverse_lazy('bookings_list', kwargs={'pk': self.object.park_num})
