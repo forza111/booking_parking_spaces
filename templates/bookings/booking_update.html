@@ -1,0 +1,14 @@
+{% extends 'base.html' %}
+{% block content %}
+
+<div class="features">
+    <form method="post">
+        {% csrf_token %}
+        <input type="datetime-local" class="form-control" name="start_date"><br>
+        <input type="datetime-local" class="form-control" name="end_date"><br>
+
+        <button class="btn btn-success" type="submit">Изменить</button>
+    </form>
+</div>
+
+{% endblock content %}

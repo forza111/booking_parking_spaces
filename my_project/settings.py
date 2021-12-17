@@ -127,8 +127,8 @@ USE_L10N = True
 
 USE_TZ = True
 
-LOGIN_REDIRECT_URL = '/bookings/parkings'
-LOGOUT_REDIRECT_URL = '/bookings/parkings'
+LOGIN_REDIRECT_URL = '/bookings/parking'
+LOGOUT_REDIRECT_URL = '/bookings/parking'
 
 
 # Static files (CSS, JavaScript, Images)

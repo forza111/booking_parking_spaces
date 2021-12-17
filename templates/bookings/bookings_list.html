@@ -1,0 +1,33 @@
+{% extends 'base.html' %}
+{% block content %}
+
+<table class="table">
+  <thead>
+    <tr>
+      <th scope="col">#</th>
+      <th scope="col">Соотрудник</th>
+      <th scope="col">Начало бронирования</th>
+      <th scope="col">Конец бронирования</th>
+      <th scope="col"></th>
+      <th scope="col"></th>
+
+    </tr>
+  </thead>
+  <tbody>
+  {% for b in bookings_list %}
+    <tr>
+      <th scope="row">{{ forloop.counter }}</th>
+      <td>{{ b.user_id }}</td>
+      <td>{{ b.start_date }}</td>
+      <td>{{ b.end_date }}</td>
+      <td><a href="{% url 'update_booking' b.pk %}">редактировать</a><td>
+      <td><a href="{% url 'delete_booking' b.pk %}">удалить</a> <td>
+
+
+
+    </tr>
+  {% endfor %}
+  </tbody>
+</table>
+
+{% endblock content %}

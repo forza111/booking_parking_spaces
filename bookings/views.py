@@ -51,3 +51,25 @@ def reserve(request, pk):
     }
     return render(request, "bookings/reservation.html", data)
 
+
+class BookingsList(ListView):
+    model = Bookings
+    template_name = "bookings/bookings_list.html"
+
+    def get_queryset(self):
+        return Bookings.objects.filter(park_num=self.kwargs['pk'])
+
+
+class BookingDelete(DeleteView):
+    model = Bookings
+    template_name = 'bookings/booking_delete.html'
+    # success_url = reverse_lazy('bookings_list')
+
+    def get_success_url(self):
+        return reverse_lazy('bookings_list', kwargs={'pk': self.object.park_num})
+
+class BookingUpdate(UpdateView):
+    model = Bookings
+    template_name = 'bookings/booking_update.html'
+    fields = ["start_date", "end_date"]
+    # success_url = reverse_lazy('bookings_list')
