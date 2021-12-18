@@ -2,10 +2,20 @@
 {% block content %}
 <h1>Список парковочных мест</h1>
 {% for p in parkingplaces_list %}
-<p>Место {{p.parking_number}} <a href="{% url 'create_booking' p.pk%}">зарезервировать</a>
+<p>Место {{p.parking_number}}
+    {% if perms.bookings.add_bookings %}
+    <a href="{% url 'create_booking' p.pk%}">зарезервировать</a>
+    {% endif %}
+    {% if perms.bookings.view_bookings %}
     <a href="{% url 'bookings_list' p.pk %}">бронирования</a>
+    {% endif %}
+    {% if perms.bookings.delete_parkingplaces %}
     <a href="{% url 'delete_parking_places' p.pk %}">удалить</a>
+    {% endif %}
 </p>
 {% endfor %}
+
+{% if perms.bookings.add_parkingplaces %}
 <a href="{% url 'create_parking_places' %}">добавить</a>
+{% endif %}
 {% endblock content %}
