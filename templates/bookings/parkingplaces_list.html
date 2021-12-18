@@ -2,7 +2,7 @@
 {% block content %}
 <h1>Список парковочных мест</h1>
 {% for p in parkingplaces_list %}
-<p>Место {{p.parking_number}} <a href="{% url 'reserve' p.pk%}">зарезервировать</a>
+<p>Место {{p.parking_number}} <a href="{% url 'create_booking' p.pk%}">зарезервировать</a>
     <a href="{% url 'bookings_list' p.pk %}">бронирования</a>
     <a href="{% url 'delete_parking_places' p.pk %}">удалить</a>
 </p>

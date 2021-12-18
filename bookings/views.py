@@ -1,49 +1,38 @@
-import datetime
-
-from django.http import HttpResponse
-from django.views.generic import ListView, DetailView, UpdateView, CreateView, DeleteView
-from django.shortcuts import render
+from django.views.generic import ListView, UpdateView, CreateView, DeleteView
 from django.urls import reverse_lazy
-from django.contrib.auth.mixins import LoginRequiredMixin, PermissionRequiredMixin
+from django.contrib.auth.mixins import PermissionRequiredMixin
 
 from .models import ParkingPlaces, Bookings
-from .forms import BookingsForm
 
 
 class ParkingPlacesList(ListView):
     model = ParkingPlaces
 
 
-class ParkingPlacesDeleteView(PermissionRequiredMixin,DeleteView):
+class ParkingPlacesDeleteView(PermissionRequiredMixin, DeleteView):
     permission_required = 'bookings.delete_parkingplaces'
     model = ParkingPlaces
     template_name = 'bookings/parkingplaces_delete.html'
     success_url = reverse_lazy('parking')
 
 
-class CreateParkingPlaces(PermissionRequiredMixin,CreateView):
+class CreateParkingPlaces(PermissionRequiredMixin, CreateView):
     permission_required = 'bookings.add_parkingplaces'
     model = ParkingPlaces
     template_name = 'bookings/parking_places_create.html'
     fields = ["parking_number"]
 
 
-def reserve(request, pk):
-    error = ''
-    if request.method == 'POST':
-        form = BookingsForm(request.POST)
-        if form.is_valid():
-            form.save()
-        else:
-            error = "форма не верна"
+class CreateBooking(PermissionRequiredMixin, CreateView):
+    permission_required = 'bookings.add_bookings'
+    model = Bookings
+    template_name = 'bookings/booking_create.html'
+    fields = ["user_id", "park_num", "start_date", "end_date"]
 
-    form = BookingsForm()
-    data = {
-        'form': form,
-        'error': error,
-        'pk': pk
-    }
-    return render(request, "bookings/reservation.html", data)
+    def get_context_data(self, **kwargs):
+        context = super().get_context_data(**kwargs)
+        context['park_num'] = self.kwargs['pk']
+        return context
 
 
 class BookingsList(PermissionRequiredMixin, ListView):

@@ -2,12 +2,12 @@
 {% block content %}
 
 <div class="features">
-    <h1>Забронировать место {{ pk }} </h1>
+    <h1>Забронировать место {{ park_num }} </h1>
     <form method="post">
         {% csrf_token %}
 
         <input type="hidden" class="form-control" name="user_id" value="{{ user.id }}"><br>
-        <input type="hidden" class="form-control" name="park_num" value="{{ pk }}"><br>
+        <input type="hidden" class="form-control" name="park_num" value="{{ park_num }}"><br>
         <input type="datetime-local" class="form-control" name="start_date"><br>
         <input type="datetime-local" class="form-control" name="end_date"><br>
 

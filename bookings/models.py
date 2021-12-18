@@ -27,6 +27,9 @@ class Bookings(models.Model):
     def __str__(self):
         return self.park_num
 
+    def get_absolute_url(self):
+        return reverse('parking')
+
 
 @receiver(pre_save, sender=Bookings)
 def save_booking_hours(sender, instance, **kwargs):
