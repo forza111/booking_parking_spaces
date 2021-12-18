@@ -4,6 +4,7 @@ from django.http import HttpResponse
 from django.views.generic import ListView, DetailView, UpdateView, CreateView, DeleteView
 from django.shortcuts import render
 from django.urls import reverse_lazy
+from django.contrib.auth.mixins import LoginRequiredMixin, PermissionRequiredMixin
 
 from .models import ParkingPlaces, Bookings
 from .forms import BookingsForm
@@ -13,21 +14,18 @@ class ParkingPlacesList(ListView):
     model = ParkingPlaces
 
 
-class ParkingPlacesDeleteView(DeleteView):
+class ParkingPlacesDeleteView(PermissionRequiredMixin,DeleteView):
+    permission_required = 'bookings.delete_parkingplaces'
     model = ParkingPlaces
     template_name = 'bookings/parkingplaces_delete.html'
     success_url = reverse_lazy('parking')
 
 
-class CreateParkingPlaces(CreateView):
+class CreateParkingPlaces(PermissionRequiredMixin,CreateView):
+    permission_required = 'bookings.add_parkingplaces'
     model = ParkingPlaces
     template_name = 'bookings/parking_places_create.html'
     fields = ["parking_number"]
-
-# class BookingsCreateView(CreateView, DetailView):
-#     model = Bookings
-#     template_name = "bookings/reservation.html"
-#     fields = ["user_id", "park_num", "start_date", "end_date", "hours"]
 
 
 def reserve(request, pk):
@@ -48,7 +46,8 @@ def reserve(request, pk):
     return render(request, "bookings/reservation.html", data)
 
 
-class BookingsList(ListView):
+class BookingsList(PermissionRequiredMixin, ListView):
+    permission_required = 'bookings.view_bookings'
     model = Bookings
     template_name = "bookings/bookings_list.html"
 
@@ -56,7 +55,8 @@ class BookingsList(ListView):
         return Bookings.objects.filter(park_num=self.kwargs['pk'])
 
 
-class BookingDelete(DeleteView):
+class BookingDelete(PermissionRequiredMixin, DeleteView):
+    permission_required = 'bookings.delete_bookings'
     model = Bookings
     template_name = 'bookings/booking_delete.html'
 
@@ -64,7 +64,8 @@ class BookingDelete(DeleteView):
         return reverse_lazy('bookings_list', kwargs={'pk': self.object.park_num})
 
 
-class BookingUpdate(UpdateView):
+class BookingUpdate(PermissionRequiredMixin, UpdateView):
+    permission_required = 'bookings.change_bookings'
     model = Bookings
     template_name = 'bookings/booking_update.html'
     fields = ["start_date", "end_date"]

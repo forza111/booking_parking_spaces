@@ -6,6 +6,7 @@ from django.urls import reverse
 from django.dispatch import receiver
 from django.db.models.signals import post_save, pre_save
 
+
 class ParkingPlaces(models.Model):
     parking_number = models.CharField("Номер парковочного места", max_length=20, primary_key=True)
 
