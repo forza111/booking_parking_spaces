@@ -27,7 +27,7 @@ SECRET_KEY = 'abracadabra'
 # SECURITY WARNING: don't run with debug turned on in production!
 DEBUG = False
 
-ALLOWED_HOSTS = ['booking_parking_spaces.herokuapp.com']
+ALLOWED_HOSTS = ['*']
 
 
 # Application definition
