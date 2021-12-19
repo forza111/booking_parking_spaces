@@ -1,1 +1,1 @@
-web: gunicorn booking_parking_spaces.wsgi --log-file -
+web: gunicorn my_project.wsgi --log-file-
