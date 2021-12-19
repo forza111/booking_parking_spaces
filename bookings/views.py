@@ -1,6 +1,10 @@
 from django.views.generic import ListView, UpdateView, CreateView, DeleteView
 from django.urls import reverse_lazy
 from django.contrib.auth.mixins import PermissionRequiredMixin
+from django.db import IntegrityError
+from django.http import HttpResponse
+from django.shortcuts import render
+from django.contrib import messages
 
 from .models import ParkingPlaces, Bookings
 
@@ -28,11 +32,23 @@ class CreateBooking(PermissionRequiredMixin, CreateView):
     model = Bookings
     template_name = 'bookings/booking_create.html'
     fields = ["user_id", "park_num", "start_date", "end_date"]
+    error_message = {"date_is_busy": "Место уже забронировано на это время",
+                     "invalid_date": "Дата окончания бронирования не может быть раньше даты начала."}
 
     def get_context_data(self, **kwargs):
         context = super().get_context_data(**kwargs)
         context['park_num'] = self.kwargs['pk']
         return context
+
+    def form_valid(self, form):
+        try:
+            return super(CreateBooking, self).form_valid(form)
+        except IntegrityError:
+            messages.error(self.request, self.error_message["invalid_date"])
+            return self.form_invalid(form)
+        except ValueError:
+            messages.error(self.request, self.error_message["date_is_busy"])
+            return self.form_invalid(form)
 
 
 class BookingsList(PermissionRequiredMixin, ListView):

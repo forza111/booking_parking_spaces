@@ -5,7 +5,17 @@
     <h1>Забронировать место {{ park_num }} </h1>
     <form method="post">
         {% csrf_token %}
-
+        {% if messages %}
+            <ul class="messages">
+                {% for message in messages %}
+                    <li
+                    {% if message.tags %} class="{{ message.tags }}"{% endif %}>
+                    {% if message.level == DEFAULT_MESSAGE_LEVELS.ERROR %}{% endif %}
+                    {{ message }}
+                    </li>
+                 {% endfor %}
+            </ul>
+        {% endif %}
         <input type="hidden" class="form-control" name="user_id" value="{{ user.id }}"><br>
         <input type="hidden" class="form-control" name="park_num" value="{{ park_num }}"><br>
         <input type="datetime-local" class="form-control" name="start_date"><br>

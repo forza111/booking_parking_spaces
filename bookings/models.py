@@ -4,7 +4,10 @@ from django.db import models
 from django.contrib.auth.models import User
 from django.urls import reverse
 from django.dispatch import receiver
-from django.db.models.signals import post_save, pre_save
+from django.db.models.signals import pre_save
+from django.db.models import Q, F
+from django.core.validators import MaxValueValidator
+import datetime
 
 
 class ParkingPlaces(models.Model):
@@ -30,8 +33,18 @@ class Bookings(models.Model):
     def get_absolute_url(self):
         return reverse('parking')
 
+    class Meta:
+        constraints = [models.CheckConstraint(check=Q(end_date__gt=F('start_date')), name='date_field_check')]
+
 
 @receiver(pre_save, sender=Bookings)
-def save_booking_hours(sender, instance, **kwargs):
+def check_booking_date(sender, instance, **kwargs):
+    if Bookings.objects.all().filter(
+            park_num=instance.park_num, start_date__lte=instance.end_date,end_date__gte=instance.start_date):
+        raise ValueError
+
+
+@receiver(pre_save, sender=Bookings)
+def create_booking_hours(sender, instance, **kwargs):
     bookings_hours = math.ceil((instance.end_date - instance.start_date).total_seconds()/3600)
     instance.hours = bookings_hours
